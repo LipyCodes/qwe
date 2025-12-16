@@ -78,4 +78,5 @@ class Usercontroller extends Controller
 
         return redirect()->back()->with('cart_messages', 'Item removed from cart');
     }
+    
 }

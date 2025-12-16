@@ -11,7 +11,7 @@ Route::get('/product_details/{id}', [UserController::class,'productDetails'])->n
 Route::get('/allproducts', [UserController::class,'allProducts'])->name('viewallproducts');
 Route::get('/cart', [UserController::class,'cart'])->middleware(['auth', 'verified'])->name('cart');
 Route::get('/cart/remove/{id}', [UserController::class,'removeFromCart'])->middleware(['auth', 'verified'])->name('cart.remove');
-
+Route::get('/checkout', [Usercontroller::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 
 Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -37,6 +37,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/delete_product/{id}', [AdminController::class, 'deleteProduct'])->name('admin.deleteproduct');
     Route::get('/update_product/{id}', [AdminController::class, 'updateProduct'])->name('admin.updateproduct');
     Route::post('/add_product/{id}', [AdminController::class, 'postUpdateProduct'])->name('admin.postupdateproduct');
+
 
 
 });

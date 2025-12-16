@@ -1,40 +1,40 @@
 @extends('maindesign')
 
-@section('allproducts')
-   
-
 @section('index')
- 
+
     <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Latest Products
+        </h2>
+      </div>
       
       <div class="row">
-@foreach($products as $product)
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="box">
-            <a href="{{ route('product_details', $product->id) }}">
-                <div class="img-box">
-                    <img src="{{ asset('products/'.$product->product_image) }}" alt="">
+        @foreach($products as $product)
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="box">
+                    <a href="{{ route('product_details', $product->id) }}">
+                        <div class="img-box">
+                            <img src="{{ asset('products/'.$product->product_image) }}" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h6>{{ $product->product_title }}</h6>
+                            <h6>
+                                Price
+                                <span>₱{{ $product->product_price }}</span>
+                            </h6>
+                        </div>
+                    </a>
                 </div>
-                <div class="detail-box">
-                    <h6>{{ $product->product_title }}</h6>
-                    <h6>
-                        Price
-                        <span>₱{{ $product->product_price }}</span>
-                    </h6>
-                </div>
-            </a>
-        </div>
-    </div>
-@endforeach
-</div>
-
-        </div>
+            </div>
+        @endforeach
+      </div>
         
       <div class="btn-box">
         <a href="{{route('index')}}">
-          View Latest Products
+          Back to Home
         </a>
       </div>
     </div>
   
- @endsection
+@endsection
