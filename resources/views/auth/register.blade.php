@@ -1,136 +1,61 @@
-<x-guest-layout>
-    <style>
-        body {
-            background: #f2f4f7;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+@extends('maindesign')
 
-        .register-wrapper {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+@section('index')
 
-        .register-card {
-            background: #ffffff;
-            width: 400px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
+<div class="contact_section">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Sign Up
+            </h2>
+        </div>
 
-        .register-card h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 26px;
-            font-weight: bold;
-            color: #333;
-        }
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                
+                @if($errors->any())
+                    <div style="color: red; margin-bottom: 15px; text-align: center;">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+                <form method="POST" action="{{ route('register') }}" style="padding: 20px;">
+                    @csrf
 
-        .register-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 17px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+                    <div>
+                        <input type="text" name="name" placeholder="Full Name" value="{{ old('name') }}" required autofocus />
+                    </div>
 
-        .register-btn:hover {
-            background-color: #1e40af;
-        }
+                    <div>
+                        <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required />
+                    </div>
 
-        .bottom-links {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
+                    <div>
+                        <input type="password" name="password" placeholder="Password" required autocomplete="new-password" />
+                    </div>
 
-        .bottom-links a {
-            color: #2563eb;
-            text-decoration: none;
-        }
+                    <div>
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" required />
+                    </div>
 
-        .bottom-links a:hover {
-            text-decoration: underline;
-        }
-    </style>
+                    <div class="d-flex flex-column align-items-center">
+                        <button type="submit">
+                            REGISTER
+                        </button>
 
-    <div class="register-wrapper">
-        <div class="register-card">
-            <h2>Create Account</h2>
-
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
-
-                <!-- Name -->
-                <div class="form-group">
-                    <x-input-label for="name" :value="__('Name')" />
-                    <x-text-input
-                        id="name"
-                        class="block mt-1 w-full"
-                        type="text"
-                        name="name"
-                        :value="old('name')"
-                        required autofocus />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input
-                        id="email"
-                        class="block mt-1 w-full"
-                        type="email"
-                        name="email"
-                        :value="old('email')"
-                        required />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                </div>
-
-                <!-- Password -->
-                <div class="form-group">
-                    <x-input-label for="password" :value="__('Password')" />
-                    <x-text-input
-                        id="password"
-                        class="block mt-1 w-full"
-                        type="password"
-                        name="password"
-                        required />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="form-group">
-                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                    <x-text-input
-                        id="password_confirmation"
-                        class="block mt-1 w-full"
-                        type="password"
-                        name="password_confirmation"
-                        required />
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                </div>
-
-                <div class="mt-6">
-                    <button type="submit" class="register-btn">
-                        Register
-                    </button>
-                </div>
-
-                <div class="bottom-links">
-                    <a href="{{ route('login') }}">Already registered?</a>
-                </div>
-            </form>
+                        <div style="margin-top: 20px;">
+                            <span style="color: #101010;">Already have an account?</span>
+                            <a href="{{ route('login') }}" style="color: #FFD700; font-weight: bold;">
+                                Login
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</x-guest-layout>
+</div>
+
+@endsection

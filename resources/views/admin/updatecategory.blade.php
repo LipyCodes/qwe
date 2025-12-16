@@ -1,22 +1,51 @@
 @extends('admin.maindesign')
 
-<base href= "/public">
-@section('update_category')
+@section('dashboard')
 
-    @if(session('update_category_message'))
-        <div style="border: 1px solid green; color:white; border-radius: 4px rounded; padding: 10
-        px; background-color: green; margin-bottom: 10px;">
-            {{session('update_category_message')}}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="block margin-bottom-sm">
+                <div class="title"><strong>Update Category</strong></div>
+                <div class="block-body">
+                    
+                    @if(session('message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul style="margin-bottom: 0;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('admin.postupdatecategory', $data->id) }}" method="POST">
+                        @csrf
+                        
+                        <div class="form-group">
+                            <label class="form-control-label">Category Name</label>
+                            <input type="text" name="category_name" value="{{ $data->category_name }}" class="form-control" required>
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-success">Update Category</button>
+                            <a href="{{ route('admin.viewcategory') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
-    @endif
- <div class="container-fluid">
- <form action="{{route('admin.postupdatecategory',$category->id)}}" method="POST">
-    @csrf
-    <input type="text" name="category" value="{{$category->category}}" required="">
-    <input type="submit" name="submit" value="Update Category">
-</form>
- 
- 
+    </div>
 </div>
 
 @endsection

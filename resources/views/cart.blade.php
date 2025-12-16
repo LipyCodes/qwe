@@ -44,9 +44,16 @@
         @endif
       @endforeach
     </div>
+
+    <div class="row" style="margin-top: 30px; margin-bottom: 30px;">
+      <div class="col-12 text-center">
+        <a href="{{ route('checkout') }}" class="btn btn-primary btn-lg">
+          Proceed to Checkout
+        </a>
+      </div>
+    </div>
+
   @endif
 </div>
 
 @endsection
-
-

@@ -2,41 +2,32 @@
 <html>
 
 <head>
-  <!-- Basic -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
+  <meta name="keywords" content="fitness, gym, supplements, gear, protein" />
+  <meta name="description" content="Fuel your fitness journey with high-quality gear and supplements." />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="frontend/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ asset('frontend/images/favicon.png') }}" type="image/x-icon">
 
   <title>
-    Xmas Gift Shop
+    💪 JAL's GYM APPAREL
   </title>
 
-  <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="frontend/css/bootstrap.css" />
-
-  <!-- Custom styles for this template -->
-  <link href="frontend/css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="frontend/css/responsive.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/bootstrap.css') }}" />
+  <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet" />
+  <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
   <div class="hero_area">
-    <!-- header section strats -->
     <header class="header_section">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
         <a class="navbar-brand" href="{{ route('index') }}">
           <span>
-            Xmas Gift Shop
+            🏋️ JAL's GYM APPAREL
           </span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,40 +35,35 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav  ">
+          <ul class="navbar-nav">
             <li class="nav-item active">
               <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('viewallproducts') }}">
-                Shop
+                Nutrition & Gear
               </a>
+            </li>
           </ul>
           <div class="user_option">
+            
             @if(Auth::check())
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <a href="{{ route('logout') }}"
-                 onclick="event.preventDefault(); this.closest('form').submit();">
-                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                <span>
-                  Log Out
-                </span>
-              </a>
-            </form>
-              @else 
-            <a href="{{route('login')}}">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <span>
-                Login
-              </span>
-            </a>
-            <a href="{{route('register')}}">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <span>
-                Sign Up
-              </span>
-            </a>
+                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                    @csrf
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span>Log Out</span>
+                    </a>
+                </form>
+            @else 
+                <a href="{{ route('login') }}">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>Login</span>
+                </a>
+                <a href="{{ route('register') }}">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <span>Sign Up</span>
+                </a>
             @endif
 
             @php
@@ -99,9 +85,8 @@
         </div>
       </nav>
     </header>
-    <!-- end header section -->
-    <!-- slider section -->
 
+    @if(request()->routeIs('index'))
     <section class="slider_section">
       <div class="slider_container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -112,107 +97,39 @@
                   <div class="col-md-7">
                     <div class="detail-box"> 
                       <h1>
-                        Welcome To Our <br>
-                        Gift Shop
+                        Fuel Your <br>
+                        Fitness Journey
                       </h1>
                       <p>
-We’re so glad you stopped by. Discover a delightful collection of festive gifts, heartwarming surprises, and holiday treasures perfect for sharing joy with your loved ones. Let us help you make this Christmas truly magical and memorable.                      </p>
-                    
+                        Breathable, physique-enhancing, and designed to make you look and feel like a champion. It’s time to elevate your workout wardrobe with our premium gym apparel.
+                      </p>
                     </div>
                   </div>
                   <div class="col-md-5 ">
                     <div class="img-box">
-                      <img style="width:600px" src="frontend/images/new.png" alt="" />
+                        <img style="width:600px" src="{{ asset('frontend/images/muscle.jpg') }}" alt="Gym Gear and Supplements" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
-          
         </div>
       </div>
     </section>
-
-    <!-- end slider section -->
+    @endif
   </div>
-  <!-- end hero area -->
-
-  <!-- shop section -->
-
 
   <section class="shop_section layout_padding">
- 
     @yield('index') 
     @yield('product_details')
     @yield('all_products')
-
-
-
   </section>
 
-  <!-- end shop section -->
-
-
-
-
-
-
-
-  <!-- contact section -->
-
-  <section class="contact_section ">
-    <div class="container px-0">
-      <div class="heading_container ">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div>
-    </div>
-    <div class="container container-bg">
-      <div class="row">
-        <div class="col-lg-7 col-md-6 px-0">
-          <div class="map_container">
-            <div class="map-responsive">
-              <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+Paris+France" width="600" height="300" frameborder="0" style="border:0; width: 100%; height:100%" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
-            <div>
-              <input type="text" placeholder="Name" />
-            </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
-            </div>
-            <div class="d-flex ">
-              <button>
-                SEND
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <section class="contact_section">
+     </section>
   <br><br><br>
-
-  <!-- end contact section -->
-
-   
-
-  <!-- info section -->
-
- <section class="info_section layout_padding2-top">
+  <section class="info_section layout_padding2-top">
 
   <!-- SOCIAL ICONS -->
   <div class="social_container text-center mb-4">
@@ -245,6 +162,7 @@ We’re so glad you stopped by. Discover a delightful collection of festive gift
           <p>JOHN CHRIS DIOSO</p>
           <p>ADRIAN MATHEW CORTES</p>
           <p>LAURENT COLIFLORES</p>
+          <p>JOHN FRANCIS YPIL</p>
         </div>
 
         <!-- CONTACT US -->
@@ -264,23 +182,29 @@ We’re so glad you stopped by. Discover a delightful collection of festive gift
     <div class="container text-center">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Web Tech Knowledge</a>
+        <a href="https://html.design/">JAL'S CO.</a>
       </p>
     </div>
   </footer>
 
 </section>
 
+  <script src="{{ asset('frontend/js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ asset('frontend/js/bootstrap.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="{{ asset('frontend/js/custom.js') }}"></script>
 
-  <!-- end info section -->
-
-
-  <script src="frontend/js/jquery-3.4.1.min.js"></script>
-  <script src="frontend/js/bootstrap.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  @if(session('order_success'))
+  <script>
+      Swal.fire({
+          title: 'Order Placed!',
+          text: "{{ session('order_success') }}",
+          icon: 'success',
+          confirmButtonColor: '#28a745',
+          confirmButtonText: 'Great!'
+      });
   </script>
-  <script src="frontend/js/custom.js"></script>
+  @endif
 
 </body>
-
 </html>

@@ -25,13 +25,20 @@
                             </h6>
                         </div>
                     </a>
+                    <div class="mt-2 text-center">
+                        <a href="{{ route('add_to_cart', $product->id) }}" class="btn btn-sm btn-primary">
+                            Add to Cart
+                        </a>
+                    </div>
                 </div>
             </div>
         @endforeach
       </div>
         
-      <div class="btn-box">
-        <a href="{{route('index')}}">
+
+      
+      <div class="btn-box d-flex justify-content-center mt-5 mb-4">
+        <a href="{{ route('index') }}" class="btn btn-warning">
           Back to Home
         </a>
       </div>

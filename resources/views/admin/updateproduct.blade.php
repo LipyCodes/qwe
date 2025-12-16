@@ -1,48 +1,93 @@
 @extends('admin.maindesign')
 
-@section('add_product')
+@section('dashboard') <div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="block margin-bottom-sm">
+                <div class="title"><strong>Update Product</strong></div>
+                <div class="block-body">
+                    
+                    @if(session('message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
 
-    @if(session('product_message'))
-        <div style="border: 1px solid green; color:white; border-radius: 4px rounded; padding: 10 px; background-color: green; margin-bottom: 10px;">
-            {{ session('product_message') }}
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul style="margin-bottom: 0;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('admin.postupdateproduct', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <div class="form-group">
+                            <label class="form-control-label">Product Title</label>
+                            <input type="text" name="title" value="{{ $product->product_title }}" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4" required>{{ $product->product_description }}</textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Price</label>
+                                    <input type="number" name="price" value="{{ $product->product_price }}" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Quantity</label>
+                                    <input type="number" name="quantity" value="{{ $product->product_quantity }}" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Category</label>
+                            <select name="category" class="form-control" required>
+                                <option value="{{ $product->category }}" selected>{{ $product->category }}</option>
+                                
+                                @foreach($category as $cat)
+                                    @if($cat->category_name != $product->category)
+                                        <option value="{{ $cat->category_name }}">{{ $cat->category_name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Current Image</label>
+                            <br>
+                            <img width="150" src="{{ asset('products/' . $product->product_image) }}" style="margin: 10px 0; border-radius: 5px;">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Change Image (Optional)</label>
+                            <input type="file" name="image" class="form-control-file">
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-success">Update Product</button>
+                            <a href="{{ route('admin.viewproduct') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
-    @endif
-
-    <div class="container-fluid" style="margin-left: 400px;">
-        <form action="{{ route('admin.postupdateproduct', $product->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <input type="text" name="product_title" value="{{ $product->product_title }}">
-            <br><br>
-
-            <textarea name="product_description" style="height: 300px; width: 200px;">{{ $product->product_description }}</textarea>
-
-            <input type="number" name="product_quantity" value="{{ $product->product_quantity }}">
-            <br><br>
-
-            <input type="number" name="product_price" value="{{ $product->product_price }}">
-            <br><br>
-
-            <img style="width: 100px;" src="{{ asset('products/' . $product->product_image) }}">
-            <label>Change Product Image</label>
-            <input type="file" name="product_image">
-            <label>Add new image! </label>
-            <br><br>
-
-            <select name="product_category">
-                <option value="{{ $product->product_category }}">
-                    {{ $product->product_category }}
-                </option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->category }}</option>
-                @endforeach
-            </select>
-            <label>Select Category </label>
-            <br><br>
-
-            <input type="submit" name="submit" value="Update Product">
-            <br><br>
-        </form>
     </div>
+</div>
 
 @endsection

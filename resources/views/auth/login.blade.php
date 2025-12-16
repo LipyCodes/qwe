@@ -1,126 +1,71 @@
-<x-guest-layout>
-    <style>
-        body {
-            background: #f2f4f7;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+@extends('maindesign')
 
-        .login-wrapper {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+@section('index')
 
-        .login-card {
-            background: #ffffff;
-            width: 380px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
+<div class="contact_section">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Login
+            </h2>
+        </div>
 
-        .login-card h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 26px;
-            font-weight: bold;
-            color: #333;
-        }
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                @if(session('status'))
+                    <div style="color: green; margin-bottom: 15px; text-align: center;">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+                @if($errors->any())
+                    <div style="color: red; margin-bottom: 15px; text-align: center;">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
 
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 17px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+                <form method="POST" action="{{ route('login') }}" style="padding: 20px;">
+                    @csrf
 
-        .login-btn:hover {
-            background-color: #1e40af;
-        }
+                    <div>
+                        <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required autofocus />
+                    </div>
 
-        .bottom-links {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
+                    <div>
+                        <input type="password" name="password" placeholder="Password" required autocomplete="current-password" />
+                    </div>
 
-        .bottom-links a {
-            color: #2563eb;
-            text-decoration: none;
-        }
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <input id="remember_me" type="checkbox" name="remember" style="width: auto; height: auto; margin-right: 10px; margin-bottom: 0;">
+                        <label for="remember_me" style="margin: 0; color: #101010;">Remember me</label>
+                    </div>
 
-        .bottom-links a:hover {
-            text-decoration: underline;
-        }
-    </style>
+                    <div class="d-flex flex-column align-items-center">
+                        <button type="submit">
+                            LOG IN
+                        </button>
 
-    <div class="login-wrapper">
-        <div class="login-card">
-            <h2>Login</h2>
-
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <!-- Email -->
-                <div class="form-group">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input
-                        id="email"
-                        class="block mt-1 w-full"
-                        type="email"
-                        name="email"
-                        :value="old('email')"
-                        required autofocus />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                </div>
-
-                <!-- Password -->
-                <div class="form-group">
-                    <x-input-label for="password" :value="__('Password')" />
-                    <x-text-input
-                        id="password"
-                        class="block mt-1 w-full"
-                        type="password"
-                        name="password"
-                        required />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
-
-                <!-- Remember Me -->
-                <div class="block mt-4">
-                    <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" type="checkbox" name="remember">
-                        <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <!-- Buttons -->
-                <div class="mt-6">
-                    <button type="submit" class="login-btn">
-                        Log in
-                    </button>
-                </div>
-
-                <div class="bottom-links">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}">Forgot password?</a><br>
-                    @endif
-                    <a href="{{ route('register') }}">Create an account</a>
-                </div>
-            </form>
+                        <div style="margin-top: 20px;">
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}" style="color: #101010; font-size: 14px;">
+                                    Forgot your password?
+                                </a>
+                            @endif
+                        </div>
+                        
+                        <div style="margin-top: 10px;">
+                            <span style="color: #101010;">Don't have an account?</span>
+                            <a href="{{ route('register') }}" style="color: #FFD700; font-weight: bold;">
+                                Sign Up
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</x-guest-layout>
+</div>
+
+@endsection
